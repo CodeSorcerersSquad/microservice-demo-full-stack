@@ -31,4 +31,13 @@ public class ProspectComponent {
 		return prospectRepository.findOne(id);
 	}
 	
+	/**
+	 * Save a prospect to a persistent store
+	 * @param prospect - the prospect to be saved
+	 * @return The prospect saved with his identifier filled
+	 */
+	public Prospect save(Prospect prospect){
+		return prospectRepository.save(prospect);
+	}
+	
 }
