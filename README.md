@@ -19,6 +19,10 @@ This goal of this project is to illustrate a full stack demonstration of a micro
 - Apache Mesos & Marathon
 - 
 
+RAML to document the APIs
+
+-- Documentation of the code --> 
+
 *******Under Construction*******
 
 ## Requirements
