@@ -2,6 +2,7 @@ package com.microservice.demo.prospect;
 
 import static com.google.common.base.Predicates.or;
 import static springfox.documentation.builders.PathSelectors.regex;
+import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 import java.lang.reflect.WildcardType;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -27,9 +29,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static com.google.common.collect.Lists.*;
-import static springfox.documentation.schema.AlternateTypeRules.*;
-
 /**
  * Startup the prospect service spring boot application. This class is
  * responsible to load some prospect to a H2 database.
@@ -38,6 +37,7 @@ import static springfox.documentation.schema.AlternateTypeRules.*;
  *
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableSwagger2
 public class ProspectService implements CommandLineRunner {
 

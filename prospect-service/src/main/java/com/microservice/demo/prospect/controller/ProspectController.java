@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiParam;
 
 @Api(value="prospect-api", produces="application/json")
 @RestController
-@RequestMapping("/prospect-service/v1")
+@RequestMapping("/v1")
 public class ProspectController {
 	
 	@Autowired

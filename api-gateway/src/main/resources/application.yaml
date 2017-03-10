@@ -1,0 +1,27 @@
+# Spring Application Configurations
+spring:
+  application:
+    name: api-gateway
+
+# Server Configurations
+server:
+  port: 8075
+
+# Zuul Properties Configuration
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+
+  #  Uncomment to disable auto-registering all services read from Eureka
+  #  ignoredServices: '*'
+  routes:
+    prospect-service:
+      path: /prospect/**
+      serviceId: prospect-service-v1
+      
+      
+# Eureka Client Configurations
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9761/eureka/
