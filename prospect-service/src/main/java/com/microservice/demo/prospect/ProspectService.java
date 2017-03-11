@@ -112,14 +112,14 @@ public class ProspectService implements CommandLineRunner {
 	private Predicate<String> paths() {
 	    return or(
 	        regex("/prospect.*"),
-	        regex("/prospect-service.*"));
+	        regex("/v1.*"));
 	  }
 	
 	private ApiInfo apiInfo() {
 		ApiInfo apiInfo = new ApiInfo(
 				"Prospect REST API", 
 				"REST API to manipulate and get prospect information", 
-				"API TOS", 
+				"v1.0.0", 
 				"Terms of service",
 				"rmzoni@gmail.com", 
 				"Apache License 2.0", 
