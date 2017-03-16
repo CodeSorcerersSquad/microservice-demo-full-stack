@@ -42,7 +42,8 @@ TODO
 TODO
 
 Installation
-$ sudo docker pull sebp/elk
+cd elk
+$ sudo docker build -t elk:1.0 .
 
 Specific version combinations of Elasticsearch, Logstash and Kibana can be pulled by using tags.
 
@@ -52,10 +53,11 @@ The available tags are listed on Docker Hub's sebp/elk image page or GitHub repo
 
 By default, if no tag is indicated (or if using the tag latest), the latest version of the image will be pulled.
 
+
 Usage
 Run a container from the image with the following command:
 
-$ sudo docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk
+$ sudo docker run -p 5601:5601 -p 9200:9200 -p 4560:4560 -it --name elk elk:1.0
 
 Note – The whole ELK stack will be started. See the Starting services selectively section to selectively start part of the stack.
 
