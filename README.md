@@ -33,6 +33,14 @@ RAML to document the APIs
 
 ## Building & Configuration
 
+### Config Dopcker
+- Install Docker
+-- https://docs.docker.com/engine/installation/linux/ubuntu/
+
+- Install Docker Componse
+-- https://docs.docker.com/compose/install/
+
+
 ### Config Kafka
 TODO
 
