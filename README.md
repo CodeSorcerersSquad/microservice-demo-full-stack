@@ -47,37 +47,39 @@ TODO
 
 
 ### Config ELK
-TODO
-
 Installation
-cd elk
-$ sudo docker build -t elk:1.0 .
+Start the ELK stack using *docker-compose*:
 
-Specific version combinations of Elasticsearch, Logstash and Kibana can be pulled by using tags.
+```bash
+$ docker-compose up
+```
 
-For instance, the image containing Elasticsearch 1.7.3, Logstash 1.5.5, and Kibana 4.1.2 (which is the last image using the Elasticsearch 1.x and Logstash 1.x branches) bears the tag E1L1K4, and can therefore be pulled using sudo docker pull sebp/elk:E1L1K4.
+You can also choose to run it in background (detached mode):
 
-The available tags are listed on Docker Hub's sebp/elk image page or GitHub repository page.
-
-By default, if no tag is indicated (or if using the tag latest), the latest version of the image will be pulled.
-
+```bash
+$ docker-compose up -d
+```
 
 Usage
-Run a container from the image with the following command:
 
-$ sudo docker run -p 5601:5601 -p 9200:9200 -p 4560:4560 -it --name elk elk:1.0
+Now that the stack is running, you'll want to inject logs in it. The shipped logstash configuration allows you to send content via tcp:
 
-Note – The whole ELK stack will be started. See the Starting services selectively section to selectively start part of the stack.
+```bash
+$ nc localhost 5000 < /path/to/logfile.log
+```
 
-This command publishes the following ports, which are needed for proper operation of the ELK stack:
+And then access Kibana UI by hitting [http://localhost:5601](http://localhost:5601) with a web browser.
 
-    5601 (Kibana web interface).
-    9200 (Elasticsearch JSON interface).
-    5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section).
+*NOTE*: You'll need to inject data into logstash before being able to configure a logstash index pattern in Kibana. Then all you should have to do is to hit the create button.
 
-Note – The image also exposes Elasticsearch's transport interface on port 9300. Use the -p 9300:9300 option with the docker command above to publish it. This transport interface is notably used by Elasticsearch's Java client API, and to run Elasticsearch in a cluster.
+Refer to [Connect Kibana with Elasticsearch](https://www.elastic.co/guide/en/kibana/current/connect-to-elasticsearch.html) for detailed instructions about the index pattern configuration.
 
-https://elk-docker.readthedocs.io/
+By default, the stack exposes the following ports:
+* 5000: Logstash TCP input.
+* 9200: Elasticsearch HTTP
+* 5601: Kibana
+
+[Reference Project](https://github.com/deviantony/docker-elk)
 
 obs. In case of this error: max virtual memory areas vm.max_map_count [65530] is too low
 $ sudo sysctl -w vm.max_map_count=262144
