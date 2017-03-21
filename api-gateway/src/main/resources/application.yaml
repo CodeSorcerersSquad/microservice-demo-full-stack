@@ -2,7 +2,19 @@
 spring:
   application:
     name: api-gateway
-
+  
+  # OAuth
+  oauth2:
+    client:
+      clientId: 218a201e423999fa61af
+      clientSecret: 59039da2197d8c7fb617bb9d5cb495d864f2a376
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user
+      preferTokenInfo: false
+  
 # Server Configurations
 server:
   port: 8075
@@ -19,9 +31,15 @@ zuul:
       path: /prospect/**
       serviceId: prospect-service-v1
       
-      
+
 # Eureka Client Configurations
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9761/eureka/
+
+# Security
+security:
+  user:
+    name: admin
+    password: admin

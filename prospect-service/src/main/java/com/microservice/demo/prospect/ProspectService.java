@@ -41,7 +41,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class ProspectService implements CommandLineRunner {
 	
-	//TODO - Use Elastich Search
 	//TODO - Create mechanisc to use kafka messaging to initiate prospect avaliation
 	//TODO - Create client api with NodeJS registering in eureka server
 	

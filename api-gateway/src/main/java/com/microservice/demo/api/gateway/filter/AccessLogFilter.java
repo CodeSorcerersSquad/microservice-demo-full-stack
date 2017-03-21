@@ -55,7 +55,7 @@ public class AccessLogFilter extends ZuulFilter {
 			logger.warn("Error reading body", e);
 		}
 
-		// TODO - Log the whole message --> Use Elastich Search
+		// TODO - Log the message as a JSON
 
 		return null;
 	}
