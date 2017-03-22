@@ -28,23 +28,18 @@ RAML to document the APIs
 ## Requirements
 - [Java 1.8](http://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Maven](https://maven.apache.org/)
-- [ELK - Elastic Search, Logstash & Kibana]
+- [Docker](https://docs.docker.com/engine/installation/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Docker Machine]()
 
 
 ## Building & Configuration
 
-### Config Dopcker
-- Install Docker
--- https://docs.docker.com/engine/installation/linux/ubuntu/
 
-- Install Docker Componse
--- https://docs.docker.com/compose/install/
-
-
-### Config Kafka
-TODO
-
-
+### Config / Run Kafka
+```bash
+docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=localhost --env ADVERTISED_PORT=9092 --env AUTO.CREATE.TOPICS.ENABLE=true spotify/kafka
+```
 
 ### Config ELK
 Installation
@@ -85,7 +80,9 @@ obs. In case of this error: max virtual memory areas vm.max_map_count [65530] is
 $ sudo sysctl -w vm.max_map_count=262144
 
 ### Config Spring Boot Applications
+```bash
 mvn clean install
+```
 
 Build Docker Images --> TODO
 

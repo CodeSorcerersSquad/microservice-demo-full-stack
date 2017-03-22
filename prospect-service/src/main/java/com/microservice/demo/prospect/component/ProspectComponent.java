@@ -3,6 +3,7 @@ package com.microservice.demo.prospect.component;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import com.microservice.demo.prospect.entity.Prospect;
@@ -10,6 +11,9 @@ import com.microservice.demo.prospect.repository.ProspectRepository;
 
 @Component
 public class ProspectComponent {
+	
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate;
 	
 	@Autowired
 	private ProspectRepository prospectRepository;
@@ -27,7 +31,7 @@ public class ProspectComponent {
 	 * @param id - prospect identification
 	 * @return The prospect idetified by its id
 	 */
-	public Prospect getProspectById(long id){
+	public Prospect getProspectById(final long id){
 		return prospectRepository.findOne(id);
 	}
 	
@@ -36,8 +40,13 @@ public class ProspectComponent {
 	 * @param prospect - the prospect to be saved
 	 * @return The prospect saved with his identifier filled
 	 */
-	public Prospect save(Prospect prospect){
-		return prospectRepository.save(prospect);
+	public Prospect save(final Prospect prospect){
+		
+		Prospect prospectSaved = prospectRepository.save(prospect);
+		kafkaTemplate.send("TOPIC.AVAL.PROSPECT", "Test");
+		kafkaTemplate.flush();
+		return prospectSaved;
 	}
+	
 	
 }

@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  eureka-server:
+    build: .
+    ports:
+      - "9761:9761"
+    network_mode: "host"
