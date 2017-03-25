@@ -30,7 +30,6 @@ RAML to document the APIs
 - [Maven](https://maven.apache.org/)
 - [Docker](https://docs.docker.com/engine/installation/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Docker Machine]()
 
 
 ## Building & Configuration
@@ -79,9 +78,13 @@ By default, the stack exposes the following ports:
 obs. In case of this error: max virtual memory areas vm.max_map_count [65530] is too low
 $ sudo sysctl -w vm.max_map_count=262144
 
-### Config Spring Boot Applications
+### Build Spring Boot Applications
+***Eureka Server
 ```bash
+cd eureka-server
 mvn clean install
+docker build -t eureka-server:1.0.0 .
+docker run --net host -p 8090:8090 -t eureka-server:1.0.0
 ```
 
 Build Docker Images --> TODO
