@@ -18,50 +18,54 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.microservice.demo.prospect.component.Listener;
+import com.microservice.demo.prospect.entity.Prospect;
 
 @Configuration
 @EnableKafka
 public class KafkaProducerConfig {
 	
-//	@Bean
-//	KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
-//		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-//		factory.setConsumerFactory(consumerFactory());
-//		factory.setConcurrency(3);
-//		factory.getContainerProperties().setPollTimeout(3000);
-//		return factory;
-//	}
-//
-//	@Bean
-//	public ConsumerFactory<String, String> consumerFactory() {
-//		return new DefaultKafkaConsumerFactory<>(consumerConfigs());
-//	}
-//
-//	@Bean
-//	public Map<String, Object> consumerConfigs() {
-//		Map<String, Object> propsMap = new HashMap<>();
-//		propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-//		propsMap.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
-//		propsMap.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
-//		propsMap.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
-//		propsMap.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-//		propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-//		propsMap.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
-//		propsMap.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-//		return propsMap;
-//	}
-	
+	@Bean
+	KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Prospect>> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Prospect> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactory());
+		factory.setConcurrency(3);
+		factory.getContainerProperties().setPollTimeout(3000);
+		return factory;
+	}
 
 	@Bean
-	public Listener listener() {
-		return new Listener();
+	public ConsumerFactory<String, Prospect> consumerFactory() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
+		        new JsonDeserializer<>(Prospect.class));
+	}
+
+	@Bean
+	public Map<String, Object> consumerConfigs() {
+		Map<String, Object> propsMap = new HashMap<>();
+		propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		propsMap.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+		propsMap.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
+		propsMap.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
+		propsMap.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		propsMap.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
+		propsMap.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		return propsMap;
 	}
 	
+
+//	@Bean
+//	public ListenerProspectAvaliation listener() {
+//		return new ListenerProspectAvaliation();
+//	}
+	
 	@Bean
-	public ProducerFactory<String, String> producerFactory() {
-		return new DefaultKafkaProducerFactory<>(producerConfigs());
+	public ProducerFactory<String, Prospect> producerFactory() {
+		return new DefaultKafkaProducerFactory<>(consumerConfigs(), new StringSerializer(),
+		        new JsonSerializer<>());
 	}
 
 	@Bean
@@ -79,7 +83,7 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public KafkaTemplate<String, String> kafkaTemplate() {
-		return new KafkaTemplate<String, String>(producerFactory());
+	public KafkaTemplate<String, Prospect> kafkaTemplate() {
+		return new KafkaTemplate<String, Prospect>(producerFactory());
 	}
 }

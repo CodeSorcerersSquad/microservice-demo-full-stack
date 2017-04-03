@@ -87,7 +87,21 @@ docker build -t eureka-server:1.0.0 .
 docker run --net host -p 8090:8090 -t eureka-server:1.0.0
 ```
 
-Build Docker Images --> TODO
+***Prospect Service API
+```bash
+cd prospect-service
+mvn clean install
+docker build -t prospect-service:1.0.0 .
+docker run --net host -p 8090:8090 -t prospect-service:1.0.0
+```
+***API Gateway
+```bash
+cd api-gateway
+mvn clean install
+docker build -t api-gateway:1.0.0 .
+docker run --net host -p 8090:8090 -t api-gateway:1.0.0
+```
+
 
 Configure Apache Mesos and Marathon --> TODO
 
