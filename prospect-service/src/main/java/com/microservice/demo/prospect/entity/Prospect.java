@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
 public class Prospect {
 	

@@ -1,0 +1,179 @@
+#%RAML 1.0
+title: Prospect API
+version: v1.0.0
+baseUri: http://localhost:8075/api/prospect/v1
+protocols:
+  - HTTP
+
+documentation:
+ - title: Home
+   content: |
+     Welcome to the _Prospect API_ Documentation. The _Prospect API_
+     allows you to connect to the prospect capture and consulting system. You
+     may also benefit from consulting our entire microservice application in
+     [microservice full stack](https://github.com/rmzoni/microservice-demo-full-stack).
+
+types:
+  prospect:
+    description: Definition of a prospect type
+    type: object
+    properties:
+      id:
+        description: Prospect identification number
+        type: number
+        required: false
+        examples:
+          - 12313
+          - 990890
+      name:
+        description: Prospect name
+        type: string
+        required: true
+        examples:
+          - John Wilson
+          - Rafael Manzoni
+      email:
+        description: Prospect email
+        type: string
+        required: true
+        pattern: "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})"
+        examples:
+          - john.wilson.123@gmail.com
+          - rafael.manzoni.1908@gmail.com
+      address:
+        description: Prospect address
+        properties:
+          id:
+            description: Address identification number
+            type: number
+            required: false
+            examples:
+              - 12312
+              - 13123
+          number:
+            description: Street number
+            type: number
+            required: true
+            examples:
+              - 123
+              - 213
+          street:
+            description: Street name
+            type: string
+            required: true
+            examples:
+              - Av Paulista
+              - Boubon Street
+          zipcode:
+            description: Zip code
+            type: string
+            required: true
+            examples:
+              - 12312-912
+              - 12312-123
+          complement:
+            description: The address complement
+            type: string
+            required: false
+            examples:
+              - Ap 123
+              - Ap 1234
+          city:
+            description: The city name
+            type: string
+            required: true
+            examples:
+              - Sao Paulo
+              - New York
+          state:
+            description: The state name
+            type: string
+            required: true
+            examples:
+              - Sao Paulo
+              - Florida
+          country:
+            description: The country name
+            type: string
+            required: true
+            examples:
+              - Brazil
+              - United States
+
+/prospects:
+  description: Collection of prospect
+  displayName: Prospect Resource
+  get:
+    description: Get all prospect
+    responses:
+      200:
+        description: Success - find more than one prospect
+        headers:
+          Location:
+            description: Resource location
+        body:
+          application/json:
+            properties:
+              type: array
+              items: prospect
+      204:
+        description: Success - find no prospect
+        headers:
+          Location:
+            description: Resource location
+      400:
+        description: Client Error - Invalid parameters
+      500:
+        description: Server Error - Error to execute the request
+
+  post:
+    description: Create a new prospect
+    body:
+      application/json:
+        properties:
+          type: prospect
+    responses:
+      201:
+        description: Success - create the prospect
+        headers:
+          Location:
+            description: Resource location
+        body:
+          application/json:
+            properties:
+              type: prospect
+      400:
+        description: Client Error - Invalid parameters
+      500:
+        description: Server Error - Error to execute the request
+
+  /{id}:
+    description: A specific prospect by identifier
+    displayName: A Specific Prospect Resource
+    uriParameters:
+      id:
+        description: Prospect identification nuber
+        type: string
+        required: true
+        example: "12334"
+    get:
+      description: Get a specific prospect by identifier
+      responses:
+        200:
+          description: Success - find the prospect
+          headers:
+            Location:
+              description: Resource location
+          body:
+            application/json:
+              properties:
+                type: prospect
+        204:
+          description: Success - find no prospect
+          headers:
+            Location:
+              description: Resource location
+        400:
+          description: Client Error - Invalid parameters
+        500:
+          description: Server Error - Error to execute the request
